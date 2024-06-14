@@ -9,23 +9,27 @@ import LocalShop from './LocalShop';
 import Contact from './Contact';
 import NewsAndEvents from './NewsAndEvents';
 import Gallery from './Gallery';
+import { EmailProvider } from './EmailContext';
+import MyReservations from './MyReservations';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<HomePage />}></Route>
-        <Route path='/logIn' element={<Login />}></Route>
-        <Route path='/signUp' element={<SignUp />}></Route>
-        <Route path='/reservation' element={<Reservation />}></Route>
-        <Route path='/aboutUs' element={<AboutUs />}></Route>
-        <Route path='/localShop' element={<LocalShop />}></Route>
-
-        <Route path='/newsAndEvents' element={<NewsAndEvents />}></Route>
-        <Route path='/gallery' element={<Gallery />}></Route>
-        <Route path='/contact' element={<Contact />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <EmailProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<HomePage />}></Route>
+          <Route path='/logIn' element={<Login />}></Route>
+          <Route path='/signUp' element={<SignUp />}></Route>
+          <Route path='/reservation' element={<Reservation />}></Route>
+          <Route path='/myReservations' element={<MyReservations />}></Route>
+          <Route path='/aboutUs' element={<AboutUs />}></Route>
+          <Route path='/localShop' element={<LocalShop />}></Route>
+          <Route path='/newsAndEvents' element={<NewsAndEvents />}></Route>
+          <Route path='/gallery' element={<Gallery />}></Route>
+          <Route path='/contact' element={<Contact />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </EmailProvider>
   );
 }
 

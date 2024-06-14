@@ -23,6 +23,7 @@ namespace BEapplication.Controllers
         [HttpPost]
         [AllowAnonymous]
         [EnableCors("AllowLocalhost3000")]
+        [HttpPost("/addReservation")]
         public async Task<IActionResult> AddReservation(RequestNewReservation newReservation)
         {
             await _reservationLogic.AddReservation(newReservation);
@@ -30,9 +31,9 @@ namespace BEapplication.Controllers
             return Ok(newReservation);
         }
 
-        [HttpGet("{email}")]
         [AllowAnonymous]
         [EnableCors("AllowLocalhost3000")]
+        [HttpGet("/reservations/{email}")]
         public async Task<ActionResult<List<Reservation>>> GetReservations(string email)
         {
             var reservations = await _reservationLogic.GetReservations(email);

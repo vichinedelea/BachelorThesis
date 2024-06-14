@@ -34,6 +34,9 @@ namespace BEapplication.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Hour")
                         .HasColumnType("int");
 

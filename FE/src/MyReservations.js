@@ -11,7 +11,7 @@ const MyReservations = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const response = await fetch(`https://localhost:5001/api/reservations/${email}`);
+        const response = await fetch(`https://localhost:7277/api/reservations/${email}`);
         if (!response.ok) {
           throw new Error('Failed to fetch reservations');
         }
@@ -29,7 +29,7 @@ const MyReservations = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://localhost:5001/api/reservations/${id}`, {
+      const response = await fetch(`https://localhost:7277/api/reservations/${id}`, {
         method: 'DELETE'
       });
       if (!response.ok) {

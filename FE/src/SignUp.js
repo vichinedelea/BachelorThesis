@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import BackToHomePageButton from './BackToHomePageButton';
+import { useNavigate } from "react-router-dom";
+import { useEmail } from './EmailContext';
 
 const SignUp = () => {
   const [userName, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [emailInput, setEmailInput] = useState('');
   const [password, setPassword] = useState('');
   const [isPending, setIsPending] = useState(false);
-  const navigate = useNavigate(); // Create an instance of navigate
+  const { setEmail } = useEmail();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = { userName, email, password };
+    const user = { userName, email: emailInput, password };
 
     setIsPending(true);
 
@@ -21,9 +22,9 @@ const SignUp = () => {
       body: JSON.stringify(user)
     }).then(() => {
       console.log('new user added');
-      console.log(user);
+      setEmail(emailInput); // Set the email in context
       setIsPending(false);
-      navigate('/reservation'); // Redirect to next page on successful sign-up
+      navigate('/reservation'); // Redirect to the reservation page on successful sign-up
     }).catch((error) => {
       console.error('Error adding user:', error);
       setIsPending(false);
@@ -53,8 +54,8 @@ const SignUp = () => {
               type="email"
               id="emailInput"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
               placeholder="Enter Email"
               className="form-control rounded-0"
             />
@@ -78,11 +79,7 @@ const SignUp = () => {
             Adding...
           </button>}
           <p>You agree to our terms and policies</p>
-          <Link to="/logIn" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
-            Log in
-          </Link>
         </form>
-        < BackToHomePageButton/>
       </div>
     </div>
   );

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import BackToHomePageButton from './BackToHomePageButton';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEmail } from './EmailContext';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmailInput] = useState('');
   const [password, setPassword] = useState('');
-  const [isPending, setIsPending] = useState(false); // Change 'false' to false
+  const [isPending, setIsPending] = useState(false);
+  const { setEmail } = useEmail();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,11 +20,12 @@ const Login = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user)
     }).then(() => {
-      console.log('user founded');
-      console.log(user);
+      console.log('user found');
+      setEmail(email); // Set the email in context
       setIsPending(false);
+      navigate('/reservation'); // Redirect to the reservation page on successful login
     }).catch((error) => {
-      console.error('Error adding user:', error);
+      console.error('Error checking user:', error);
       setIsPending(false);
     });
   }
@@ -38,7 +41,7 @@ const Login = () => {
               type="email"
               id="emailInput"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmailInput(e.target.value)}
               placeholder="Enter Email"
               className="form-control rounded-0"
             />
@@ -69,7 +72,6 @@ const Login = () => {
             Create Account
           </Link>
         </form>
-        < BackToHomePageButton/>
       </div>
     </div>
   );
