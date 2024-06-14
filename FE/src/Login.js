@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BackToHomePageButton from './BackToHomePageButton';
-import { useEmail } from './EmailContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isPending, setIsPending] = useState(false);
-  const navigate = useNavigate();
-  const { setEmail: setEmailContext } = useEmail();
+  const [isPending, setIsPending] = useState(false); // Change 'false' to false
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,18 +13,16 @@ const Login = () => {
 
     setIsPending(true);
 
-    fetch("https://localhost:7277/checkUser", {
+    fetch("https://localhost:7277/ckeckUser", {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user)
     }).then(() => {
-      console.log('user found');
+      console.log('user founded');
       console.log(user);
       setIsPending(false);
-      setEmailContext(email);
-      navigate('/reservation');
     }).catch((error) => {
-      console.error('Error checking user:', error);
+      console.error('Error adding user:', error);
       setIsPending(false);
     });
   }
@@ -59,15 +54,25 @@ const Login = () => {
               className="form-control rounded-0"
             />
           </div>
-          {!isPending && <button type="submit" className="btn btn-success w-100 rounded-0">Log in</button>}
-          {isPending && <button type="button" className="btn btn-success w-100 rounded-0" disabled>Logging in...</button>}
+          {!isPending && (
+            <button type="submit" className="btn btn-success w-100 rounded-0">
+              Log in
+            </button>
+          )}
+          {isPending && (
+            <button type="button" className="btn btn-success w-100 rounded-0" disabled>
+              Logging in...
+            </button>
+          )}
           <p>You agree to our terms and policies</p>
-          <Link to="/signUp" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">Create Account</Link>
+          <Link to="/signUp" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
+            Create Account
+          </Link>
         </form>
-        <BackToHomePageButton clearEmail={true}/>
+        < BackToHomePageButton/>
       </div>
     </div>
   );
-}
+};
 
 export default Login;
